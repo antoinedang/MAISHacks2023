@@ -1,6 +1,6 @@
 from flask import Flask, request, jsonify
 import subprocess
-import os
+import requests
 
 app = Flask(__name__)
 
@@ -29,7 +29,6 @@ def get_midi():
         
         primer_notes_string = request.get_json().get('primer')
 
-        # Define the argument for the Bash script
         bash_script_arguments = [note_to_int_mapping[note] for note in primer_notes_string.split(',')]  # You can use the file data as the argument
         
         bash_arg_str = ""
@@ -40,8 +39,8 @@ def get_midi():
 
         subprocess.call(["bash", generate_midi_script, bash_arg_str])
 
-        # Delete the file after processing
-        os.remove(primer_file)
+        requests.post("http://localhost:3000/play")
+        
         print("Finished generation.")
         return jsonify({'result': "success", "message": ""}), 200
         
