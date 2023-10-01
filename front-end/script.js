@@ -8,7 +8,7 @@ const progressContainer = document.getElementById("progress-container");
 const title = document.getElementById("title");
 const cover = document.getElementById("cover");
 // Songs Titles
-const songs = ["lofi_1"];
+const songs = ["lofi_1", "lofi_2"];
 // KeepTrack of song
 let songIndex = 0;
 // Initially load song details into DOM
@@ -83,13 +83,21 @@ progressContainer.addEventListener("click", setProgress);
 // Song End
 audio.addEventListener("ended", nextSong);
 
-const textInput = document.getElementById('textInput');
-const submitButton = document.getElementById('submitButton');
-const output = document.getElementById('output');
+// Get references to the HTML elements
+const inputForm = document.getElementById("inputForm");
+const textInput = document.getElementById("textInput");
+const output = document.getElementById("output");
 
-submitButton.addEventListener('click', () => {
-    const userInput = textInput.value;
-    output.textContent = `You entered: ${userInput}`;
+// Add a submit event listener to the form
+inputForm.addEventListener("submit", function (e) {
+    e.preventDefault(); // Prevent the default form submission behavior
+
+    const userInput = textInput.value; // Get the user's input
+
+    // Display the user's input in the output div
+    output.innerHTML = `You entered: ${userInput}`;
+    
+    textInput.value = "";
 
     const url = new URL('http://localhost:5000/playmidi');
     url.searchParams.append("primer", userInput);
@@ -107,38 +115,4 @@ submitButton.addEventListener('click', () => {
             console.error('There was a problem with the fetch operation:', error);
         });
 
-});
-
-const playPauseDropdownBtn = document.getElementById("play-pause-dropdown");
-const songSelector = document.getElementById("song-selector");
-
-// Update the loadSong function to load the selected song
-function loadSelectedSong() {
-  const selectedSong = songSelector.value;
-  title.innerText = selectedSong;
-  audio.src = `./music/${selectedSong}.mp3`;
-  cover.src = `./images/${selectedSong}.jpg`;
-}
-
-// Play/Pause functionality for the new button
-playPauseDropdownBtn.addEventListener("click", () => {
-  if (audio.paused) {
-    loadSelectedSong();
-    playSong();
-  } else {
-    pauseSong();
-  }
-});
-
-// Change song when an option is selected from the dropdown
-songSelector.addEventListener("change", () => {
-  if (!audio.paused) {
-    // If a song is currently playing, pause it and load the new song
-    pauseSong();
-    loadSelectedSong();
-    playSong();
-  } else {
-    // If no song is playing, simply load the new song
-    loadSelectedSong();
-  }
 });
