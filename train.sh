@@ -1,7 +1,7 @@
 echo "Please enter the folder containing MIDI files to train on:"
 read INPUT_DIRECTORY
 
-echo "Drums or Melodies?"
+echo "Drums or Melody?"
 read selection
 
 echo "Process MIDI data? [y/n]"
