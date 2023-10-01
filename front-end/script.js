@@ -9,7 +9,7 @@ const title = document.getElementById("title");
 const cover = document.getElementById("cover");
 
 // Songs Titles
-const songs = ["lofi_1", "lofi_2"];
+const songs = ["song 1", "song 2", "song 3"];
 
 // KeepTrack of song
 let songIndex = 0;

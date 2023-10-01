@@ -35,6 +35,7 @@ def get_midi():
         
         bash_arg_str = ""
         for arg in bash_script_arguments:
+            if arg == "E": bash_arg_str += "E,"
             bash_arg_str += arg + ","
         
         bash_arg_str = "[" + bash_arg_str[:-1] + "]"
@@ -54,7 +55,7 @@ def generateMIDI(bash_arg_str):
     subprocess.call(["bash", generate_midi_script, bash_arg_str])
     requests.get("http://" + midi_player_ip + ":3000/play")
     
-midi_player_ip = '192.168.2.37'
+midi_player_ip = '10.122.18.215'
 
 if __name__ == '__main__':
     app.run(debug=True)
