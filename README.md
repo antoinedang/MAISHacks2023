@@ -1,3 +1,3 @@
 # MAIS_HACKS
 
-Lofi AI generator using RNN -- MAIS Hackathon
+AI melody generator using RNN -- MAIS Hackathon
