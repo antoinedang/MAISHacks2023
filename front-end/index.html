@@ -1,57 +1,58 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-<script type="text/javascript" src="particles.js"></script>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<link rel="stylesheet" href="style.css" />
-<link
-rel="stylesheet"
-href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css"
-/>
-<title>Music Player</title>
-</head>
-<div id="particles-js" style="background-attachment:inherit; position: absolute; width: 100%; height:250%; z-index: -1; pointer-events:all;">
-<script type="text/javascript">
-    particlesJS("particles-js");
-</script>
-<div class="container d-flex align-items-center flex-column" id=”particles-js”>
-</div>
-</div>
-<body>
-<h1>Music Player</h1>
-<div class="music-container" id="music-container">
-<div class="music-info">
-<h4 class="title" id="title"></h4>
-<div class="progress-container" id="progress-container">
-<div class="progress" id="progress"></div>
-</div>
-</div>
-<audio src="./music/lofi_1.mp3" id="audio"></audio>
-<audio src="./music/lofi_2.mp3" id="audio"></audio>
-<div class="img-container">
-<img src="./images/lofi_1.jpg" alt="music-cover" id="cover" />
-<img src="./images/lofi_1.jpg" alt="music-cover" id="cover" />
-</div>
-<div class="navigation">
-<button id="prev" class="action-btn">
-<i class="fa fa-backward" aria-hidden="true"></i>
-</button>
-<button id="play" class="action-btn action-btn-big">
-<i class="fa fa-play" aria-hidden="true"></i>
-</button>
-<button id="next" class="action-btn">
-<i class="fa fa-forward" aria-hidden="true"></i>
-</button>
-</div>
-    
-</div>
-<div class="container">
-    <h1>Enter your notes:</h1>
-    <input type="text" id="textInput" placeholder="Type here...">
-    <button id="submitButton">Submit</button>
-    <p id="output"></p>
-</div>
-<script src="script.js"></script>
-</body>
+  <head>
+    <script type="text/javascript" src="particles.js"></script>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css"
+    />
+    <title>LoFi-Ai</title>
+  </head>
+
+  <div id="particles-js" style="background-attachment:inherit; position: absolute; width: 100%; height:250%; z-index: -1; pointer-events:all;">
+    <script type="text/javascript">
+        particlesJS("particles-js");
+    </script>
+    <div class="container d-flex align-items-center flex-column" id=”particles-js”>
+    </div>
+  </div>
+
+  <body>
+    <h1>LoFi-Ai</h1>
+    <div class="music-container" id="music-container">
+      <div class="music-info">
+        <h4 class="title" id="title"></h4>
+        <div class="progress-container" id="progress-container">
+          <div class="progress" id="progress"></div>
+        </div>
+      </div>
+      <audio src="./music/lofi_1.mp3" id="audio"></audio>
+      <audio src="./music/lofi_2.mp3" id="audio"></audio>
+      <div class="img-container">
+        <img src="./images/lofi_1.jpg" alt="music-cover" id="cover" />
+        <img src="./images/lofi_1.jpg" alt="music-cover" id="cover" />
+      </div>
+      <div class="navigation">
+        <button id="prev" class="action-btn">
+          <i class="fa fa-backward" aria-hidden="true"></i>
+        </button>
+        <button id="play" class="action-btn action-btn-big">
+          <i class="fa fa-play" aria-hidden="true"></i>
+        </button>
+        <button id="next" class="action-btn">
+          <i class="fa fa-forward" aria-hidden="true"></i>
+        </button>
+      </div>    
+    </div>
+    <div class="container" id="submitButtondiv">
+        <h2>Enter your notes:</h2>
+        <input type="text" id="textInput" placeholder="Type here...">
+        <button id="submitButton">Submit</button>
+        <p id="output"></p>
+    </div>
+    <script src="script.js"></script>
+  </body>
 </html>
