@@ -41,7 +41,7 @@ if [ "$selection" = "Drums" ]; then
   --run_dir=/tmp/drums_rnn/logdir/run1 \
   --sequence_example_file=/tmp/drums_rnn/sequence_examples/training_drum_tracks.tfrecord \
   --hparams="batch_size=128,rnn_layer_sizes=[256,256,256]" \
-  --num_training_steps=20000
+  # --num_training_steps=20000
 
 elif [ "$selection" = "Melody" ]; then
   if [ "$process_data" = "y" ]; then
@@ -76,7 +76,7 @@ elif [ "$selection" = "Melody" ]; then
     --run_dir=/tmp/performance_rnn/logdir/run1 \
     --sequence_example_file=/tmp/performance_rnn/sequence_examples/training_performances.tfrecord \
     --hparams="batch_size=128,rnn_layer_sizes=[256,256,256]" \
-    --num_training_steps=20000
+    # --num_training_steps=20000
 
 else
   echo "Invalid input. Please enter 'Drums' or 'Melody'."

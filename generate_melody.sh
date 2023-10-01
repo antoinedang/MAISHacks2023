@@ -1,3 +1,5 @@
+sudo rm /tmp/performance_rnn/generated/*
+
 performance_rnn_generate \
     --run_dir=/tmp/performance_rnn/logdir/run1 \
     --output_dir=/tmp/performance_rnn/generated \

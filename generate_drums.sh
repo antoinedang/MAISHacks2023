@@ -1,3 +1,5 @@
+sudo rm /tmp/drums_rnn/generated/*
+
 drums_rnn_generate \
     --config=drum_kit \
     --run_dir=/tmp/drums_rnn/logdir/run1 \
