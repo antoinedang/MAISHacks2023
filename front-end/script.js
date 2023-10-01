@@ -84,6 +84,7 @@ playBtn.addEventListener("click", () => {
     playSong();
   }
 });
+
 // Change Song
 prevBtn.addEventListener("click", prevSong);
 nextBtn.addEventListener("click", nextSong);
@@ -127,3 +128,25 @@ inputForm.addEventListener("submit", function (e) {
         });
 
 });
+
+// Add an event listener to the button
+document.getElementById("getRequestButton").addEventListener("click", function() {
+  // Send a GET request when the button is clicked
+  fetch('http://localhost:3000/pause') // Replace with your API endpoint
+      .then(response => {
+          if (!response.ok) {
+              throw new Error('Network response was not ok');
+          }
+          return response.json(); // Parse the response as JSON
+      })
+      .then(data => {
+          // Handle the JSON data in the 'data' variable
+          const responseContainer = document.getElementById("responseContainer");
+          responseContainer.textContent = JSON.stringify(data, null, 2);
+      })
+      .catch(error => {
+          console.error('There was a problem with the fetch operation:', error);
+      });
+});
+
+
