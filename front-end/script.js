@@ -99,7 +99,7 @@ inputForm.addEventListener("submit", function (e) {
     
     textInput.value = "";
 
-    fetch("http://localhost:PORT/playmidi", {
+    fetch("/playmidi", {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json', 

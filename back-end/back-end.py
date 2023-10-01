@@ -26,7 +26,6 @@ note_to_int_mapping = {
 def get_midi():
     try:
         print("Generating midi from primer...")
-        # Read the contents of the file
         
         primer_notes_string = request.get_json().get('primer')
 
