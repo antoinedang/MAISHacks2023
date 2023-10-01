@@ -120,7 +120,7 @@ width: 0%;
 transform: width 0.1s linear;
 }
 
-#inputForm {
+.inputForm {
     max-width: 400px;
     margin: 0 auto;
     padding: 20px;
