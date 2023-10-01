@@ -4,20 +4,32 @@ read INPUT_DIRECTORY
 echo "Drums or Melodies?"
 read selection
 
-if [ "$userInput" = "Drums" ]; then
+if [ "$selection" = "Drums" ]; then
   # TFRecord file that will contain NoteSequence protocol buffers.
   SEQUENCES_TFRECORD=/tmp/drumsequences.tfrecord
+
+  echo "================================"
+  echo "        Processing data..."
+  echo "================================"
 
   convert_dir_to_note_sequences \
     --input_dir=$INPUT_DIRECTORY \
     --output_file=$SEQUENCES_TFRECORD \
     --recursive
 
+  echo "================================"
+  echo "        Generating dataset..."
+  echo "================================"
+
   drums_rnn_create_dataset \
     --config=drum_kit \
     --input=$SEQUENCES_TFRECORD \
     --output_dir=/tmp/drums_rnn/sequence_examples \
     --eval_ratio=0.10
+
+  echo "================================"
+  echo "        Training..."
+  echo "================================"
 
   drums_rnn_train \
   --config=drum_kit \
@@ -26,7 +38,7 @@ if [ "$userInput" = "Drums" ]; then
   --hparams="batch_size=128,rnn_layer_sizes=[256,256,256]" \
   --num_training_steps=20000
 
-elif [ "$userInput" = "Melody" ]; then
+elif [ "$selection" = "Melody" ]; then
   echo "You selected Melody."
 else
   echo "Invalid input. Please enter 'Drums' or 'Melody'."
