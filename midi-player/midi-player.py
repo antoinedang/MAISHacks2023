@@ -1,35 +1,33 @@
 from flask import Flask, request, jsonify
+from flask_cors import CORS
 import pygame
 import mido
 from mido import MidiFile, MidiTrack
 import random
 
 app = Flask(__name__)
+CORS(app)  # Enable CORS for all routes
 
 midi_file = "input.mid"
-drumMidiFilenameList = ["drums1.mid", "drums2.mid"]
+drumMidiFilenameList = ["drums1.mid"]
 
 @app.route('/play', methods=['GET'])
 def play_midi():
-    try:
-        pygame.mixer.music.stop()
-        createMelodyWithBeat()
-        pygame.mixer.music.load(midi_filename)
-        pygame.mixer.music.play()
-        global paused
-        paused = False
-        
-        print("Playback has begun.")
-        return jsonify({'result': "success", "message": ""}), 200
-        
-    except Exception as e:
-        # Return the response
-        return jsonify({'result': "error", "message": str(e)}), 500
+    pygame.mixer.music.stop()
+    createMelodyWithBeat()
+    pygame.mixer.music.load(midi_filename)
+    pygame.mixer.music.play()
+    global paused
+    paused = False
+    
+    print("Playback has begun.")
+    return jsonify({'result': "success", "message": ""}), 200
     
     
 @app.route('/stop', methods=['GET'])
 def stop_midi():
     pygame.mixer.music.stop()
+    return jsonify({'result': "success", "message": ""}), 200
 
 @app.route('/pause', methods=['GET'])
 def pause_midi():
@@ -40,12 +38,14 @@ def pause_midi():
         pygame.mixer.music.pause()
         
     paused = not paused
+    return jsonify({'result': "success", "message": ""}), 200
     
 def createMelodyWithBeat():
     # Load the piano MIDI file
     piano_file = MidiFile(midi_file)
 
-    random_drum_midi = "drum_midis/" + random.sample(drumMidiFilenameList, 1)
+    random_drum_midi = "drum_midis/" + random.sample(drumMidiFilenameList, 1)[0]
+    print(random_drum_midi)
     # Load the drum MIDI file
     drum_file = MidiFile(random_drum_midi)
 
@@ -72,4 +72,4 @@ if __name__ == '__main__':
     pygame.mixer.init()
     paused = False
     midi_filename = "input.mid"
-    app.run(debug=True, port=3000)
+    app.run(debug=True, host='0.0.0.0', port=3000)

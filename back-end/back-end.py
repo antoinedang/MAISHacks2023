@@ -46,14 +46,15 @@ def get_midi():
         
     except Exception as e:
         # Return the response
-        print("ERROR" + str(e))
+        print("ERROR: " + str(e))
         return jsonify({'result': "error", "message": str(e)}), 500
     
 def generateMIDI(bash_arg_str):
     print(type(bash_arg_str))
     subprocess.call(["bash", generate_midi_script, bash_arg_str])
-    requests.post("http://localhost:3000/play")
+    requests.get("http://" + midi_player_ip + ":3000/play")
     
+midi_player_ip = '192.168.2.37'
 
 if __name__ == '__main__':
     app.run(debug=True)

@@ -130,7 +130,7 @@ inputForm.addEventListener("submit", function (e) {
 });
 
 // Add an event listener to the button
-document.getElementById("getRequestButton").addEventListener("click", function() {
+document.getElementById("play-2").addEventListener("click", function(e) {
   // Send a GET request when the button is clicked
   fetch('http://localhost:3000/pause') // Replace with your API endpoint
       .then(response => {
