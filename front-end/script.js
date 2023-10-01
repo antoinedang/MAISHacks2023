@@ -120,3 +120,37 @@ inputForm.addEventListener("submit", function (e) {
         });
 
 });
+
+const playPauseDropdownBtn = document.getElementById("play-pause-dropdown");
+const songSelector = document.getElementById("song-selector");
+
+// Update the loadSong function to load the selected song
+function loadSelectedSong() {
+  const selectedSong = songSelector.value;
+  title.innerText = selectedSong;
+  audio.src = `./music/${selectedSong}.mp3`;
+  cover.src = `./images/${selectedSong}.jpg`;
+}
+
+// Play/Pause functionality for the new button
+playPauseDropdownBtn.addEventListener("click", () => {
+  if (audio.paused) {
+    loadSelectedSong();
+    playSong();
+  } else {
+    pauseSong();
+  }
+});
+
+// Change song when an option is selected from the dropdown
+songSelector.addEventListener("change", () => {
+  if (!audio.paused) {
+    // If a song is currently playing, pause it and load the new song
+    pauseSong();
+    loadSelectedSong();
+    playSong();
+  } else {
+    // If no song is playing, simply load the new song
+    loadSelectedSong();
+  }
+});
