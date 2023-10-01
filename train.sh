@@ -39,7 +39,37 @@ if [ "$selection" = "Drums" ]; then
   --num_training_steps=20000
 
 elif [ "$selection" = "Melody" ]; then
-  echo "You selected Melody."
+
+  SEQUENCES_TFRECORD=/tmp/notesequences.tfrecord
+
+  echo "================================"
+  echo "        Processing data..."
+  echo "================================"
+
+  convert_dir_to_note_sequences \
+    --input_dir=$INPUT_DIRECTORY \
+    --output_file=$SEQUENCES_TFRECORD \
+    --recursive
+
+  echo "================================"
+  echo "        Generating dataset..."
+  echo "================================"
+
+  performance_rnn_create_dataset \
+    --config=performance_with_dynamics \
+    --input=$SEQUENCES_TFRECORD \
+    --output_dir=/tmp/performance_rnn/sequence_examples \
+    --eval_ratio=0.10
+
+  echo "================================"
+  echo "        Training..."
+  echo "================================"
+
+  performance_rnn_train \
+    --config=performance_with_dynamics \
+    --run_dir=/tmp/performance_rnn/logdir/run1 \
+    --sequence_example_file=/tmp/performance_rnn/sequence_examples/training_performances.tfrecord
+
 else
   echo "Invalid input. Please enter 'Drums' or 'Melody'."
 fi
