@@ -9,7 +9,7 @@ app = Flask(__name__)
 CORS(app)  # Enable CORS for all routes
 
 midi_file = "input.mid"
-drumMidiFilenameList = ["actual_drums_1.mid", "actual_drums_2.mid", "actual_drums_3.mid"]
+drumMidiFilenameList = ["drums.mid"]
 
 @app.route('/play', methods=['GET'])
 def play_midi():
@@ -69,6 +69,42 @@ def createMelodyWithBeat():
         merged_file.save('merged.mid')
     except Exception as e:
         print(str(e))
+ 
+def merge_midi_files():
+    # Load the MIDI files
+    index = int(random.random()*len(drumMidiFilenameList))
+    drums = drumMidiFilenameList[index]
+    midi1 = MidiFile("drum_midis/" + drums)
+    midi2 = MidiFile(midi_file)
+
+    # midi1.tracks = [track for track in midi1.tracks if not any(msg.type == 'set_tempo' for msg in track)]
+    # midi2.tracks = [track for track in midi2.tracks if not any(msg.type == 'set_tempo' for msg in track)]
+
+    # Create a new MIDI file for the merged output
+    merged_midi = MidiFile()
+    # append_tracks(midi1, merged_midi, False)
+    # append_tracks(midi2, merged_midi, True, bpm=30)
+
+    for track in midi1.tracks:
+        new_track = MidiTrack()
+        for msg in track:
+            if not msg.is_meta:
+                new_msg = msg.copy()
+                # new_msg.time *= 2.5
+                # new_msg.time = int(new_msg.time)
+                new_track.append(new_msg)
+        merged_midi.tracks.append(new_track)
+
+
+    for track in midi2.tracks:
+        new_track = MidiTrack()
+        # program_change = Message('program_change', channel=0, program=89)
+        # new_track.append(program_change)
+        for msg in track:
+            new_msg = msg.copy()
+            new_track.append(new_msg)
+        merged_midi.tracks.append(new_track)
+    merged_midi.save("merged.mid")
 
 if __name__ == '__main__':
     pygame.init()
