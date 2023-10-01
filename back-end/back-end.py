@@ -1,8 +1,10 @@
 from flask import Flask, request, jsonify
 import subprocess
+from flask_cors import CORS
 import requests
 
 app = Flask(__name__)
+CORS(app)  # Enable CORS for all routes
 
 primer_file = "primer_notes.txt"
 generate_midi_script = "generate_melody.sh"
@@ -22,12 +24,11 @@ note_to_int_mapping = {
     "B": "71"
 }
 
-@app.route('/playmidi', methods=['POST'])
+@app.route('/playmidi', methods=['GET'])
 def get_midi():
+    print("Generating midi from primer...")
     try:
-        print("Generating midi from primer...")
-        
-        primer_notes_string = request.get_json().get('primer')
+        primer_notes_string = request.args.get('primer')
 
         bash_script_arguments = [note_to_int_mapping[note] for note in primer_notes_string.split(',')]  # You can use the file data as the argument
         
@@ -46,6 +47,7 @@ def get_midi():
         
     except Exception as e:
         # Return the response
+        print("ERROR" + str(e))
         return jsonify({'result': "error", "message": str(e)}), 500
 
 if __name__ == '__main__':
