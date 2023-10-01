@@ -2,6 +2,7 @@ from flask import Flask, request, jsonify
 import subprocess
 from flask_cors import CORS
 import requests
+import threading
 
 app = Flask(__name__)
 CORS(app)  # Enable CORS for all routes
@@ -36,12 +37,10 @@ def get_midi():
         for arg in bash_script_arguments:
             bash_arg_str += arg + ","
         
-        bash_arg_str = bash_arg_str[:-1]
+        bash_arg_str = "[" + bash_arg_str[:-1] + "]"
 
-        subprocess.call(["bash", generate_midi_script, bash_arg_str])
+        threading.Thread(target=generateMIDI, args=[bash_arg_str]).start()
 
-        requests.post("http://localhost:3000/play")
-        
         print("Finished generation.")
         return jsonify({'result': "success", "message": ""}), 200
         
@@ -49,6 +48,12 @@ def get_midi():
         # Return the response
         print("ERROR" + str(e))
         return jsonify({'result': "error", "message": str(e)}), 500
+    
+def generateMIDI(bash_arg_str):
+    print(type(bash_arg_str))
+    subprocess.call(["bash", generate_midi_script, bash_arg_str])
+    requests.post("http://localhost:3000/play")
+    
 
 if __name__ == '__main__':
     app.run(debug=True)
