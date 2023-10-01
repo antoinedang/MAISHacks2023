@@ -9,13 +9,15 @@ app = Flask(__name__)
 midi_file = "input.mid"
 drumMidiFilenameList = ["drums1.mid", "drums2.mid"]
 
-@app.route('/play', methods=['POST'])
+@app.route('/play', methods=['GET'])
 def play_midi():
     try:
         pygame.mixer.music.stop()
         createMelodyWithBeat()
         pygame.mixer.music.load(midi_filename)
         pygame.mixer.music.play()
+        global paused
+        paused = False
         
         print("Playback has begun.")
         return jsonify({'result': "success", "message": ""}), 200
@@ -25,17 +27,19 @@ def play_midi():
         return jsonify({'result': "error", "message": str(e)}), 500
     
     
-@app.route('/stop', methods=['POST'])
+@app.route('/stop', methods=['GET'])
 def stop_midi():
     pygame.mixer.music.stop()
 
-@app.route('/pause', methods=['POST'])
+@app.route('/pause', methods=['GET'])
 def pause_midi():
-    pygame.mixer.music.pause()
-
-@app.route('/unpause', methods=['POST'])
-def unpause_midi():
-    pygame.mixer.music.unpause()
+    global paused
+    if paused:
+        pygame.mixer.music.unpause()
+    else:
+        pygame.mixer.music.pause()
+        
+    paused = not paused
     
 def createMelodyWithBeat():
     # Load the piano MIDI file
@@ -66,5 +70,6 @@ def createMelodyWithBeat():
 if __name__ == '__main__':
     pygame.init()
     pygame.mixer.init()
+    paused = False
     midi_filename = "input.mid"
     app.run(debug=True, port=3000)
