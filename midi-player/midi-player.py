@@ -15,7 +15,7 @@ drumMidiFilenameList = ["drums.mid"]
 def play_midi():
     pygame.mixer.music.stop()
     merge_midi_files()
-    pygame.mixer.music.load(midi_filename)
+    pygame.mixer.music.load(midi_file)
     pygame.mixer.music.play()
     global paused
     paused = False
@@ -90,8 +90,8 @@ def merge_midi_files():
         for msg in track:
             if not msg.is_meta:
                 new_msg = msg.copy()
-                # new_msg.time *= 2.5
-                # new_msg.time = int(new_msg.time)
+                new_msg.time *= 0.15
+                new_msg.time = int(new_msg.time)
                 new_track.append(new_msg)
         merged_midi.tracks.append(new_track)
 
@@ -101,8 +101,12 @@ def merge_midi_files():
         # program_change = Message('program_change', channel=0, program=89)
         # new_track.append(program_change)
         for msg in track:
-            new_msg = msg.copy()
-            new_track.append(new_msg)
+            if msg.type == "set_tempo":
+                new_tempo = mido.bpm2tempo(60)
+                new_track.append(mido.MetaMessage('set_tempo', tempo=new_tempo, time=msg.time))
+            else:
+                new_msg = msg.copy()
+                new_track.append(new_msg)
         merged_midi.tracks.append(new_track)
     merged_midi.save("merged.mid")
 
