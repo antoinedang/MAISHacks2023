@@ -91,13 +91,9 @@ submitButton.addEventListener('click', () => {
     const userInput = textInput.value;
     output.textContent = `You entered: ${userInput}`;
 
-    fetch("http://localhost:5000/playmidi", {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json', 
-        },
-        body: JSON.stringify(userInput), 
-    })
+    const url = new URL('http://localhost:5000/playmidi');
+    url.searchParams.append("primer", userInput);
+    fetch(url)
         .then(response => {
             if (!response.ok) {
                 throw new Error('Network response was not ok');

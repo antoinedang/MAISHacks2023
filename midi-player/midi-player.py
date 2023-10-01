@@ -7,7 +7,7 @@ import random
 app = Flask(__name__)
 
 midi_file = "input.mid"
-drumMidiFilenameList = ["drum1.mid", "drum2.mid"]
+drumMidiFilenameList = ["drums1.mid", "drums2.mid"]
 
 @app.route('/play', methods=['POST'])
 def play_midi():
@@ -41,7 +41,7 @@ def createMelodyWithBeat():
     # Load the piano MIDI file
     piano_file = MidiFile(midi_file)
 
-    random_drum_midi = random.sample(drumMidiFilenameList, 1)
+    random_drum_midi = "drum_midis/" + random.sample(drumMidiFilenameList, 1)
     # Load the drum MIDI file
     drum_file = MidiFile(random_drum_midi)
 
