@@ -82,3 +82,41 @@ audio.addEventListener("timeupdate", updateProgress);
 progressContainer.addEventListener("click", setProgress);
 // Song End
 audio.addEventListener("ended", nextSong);
+
+// Get references to the HTML elements
+const inputForm = document.getElementById("inputForm");
+const textInput = document.getElementById("textInput");
+const output = document.getElementById("output");
+
+// Add a submit event listener to the form
+inputForm.addEventListener("submit", function (e) {
+    e.preventDefault(); // Prevent the default form submission behavior
+
+    const userInput = textInput.value; // Get the user's input
+
+    // Display the user's input in the output div
+    output.innerHTML = `You entered: ${userInput}`;
+    
+    textInput.value = "";
+
+    fetch("http://localhost:PORT/playmidi", {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json', 
+        },
+        body: JSON.stringify(userInput), 
+    })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json(); 
+        })
+        .then(data => {
+            console.log(data);
+        })
+        .catch(error => {
+            console.error('There was a problem with the fetch operation:', error);
+        });
+
+});
