@@ -4,8 +4,7 @@ import os
 
 app = Flask(__name__)
 
-# Define the file path you want to check
-primer_file = "primer_notes.txt"  # Replace with your file path
+primer_file = "primer_notes.txt"
 generate_midi_script = "generate_melody.sh"
 
 note_to_int_mapping = {

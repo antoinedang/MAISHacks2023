@@ -15,4 +15,4 @@ performance_rnn_generate \
 
 sudo cp /tmp/performance_rnn/generated/* ./
 
-mv *.mid output.mid
+mv *.mid /mnt/c/Users/antoi/Documents/Projects/Git/MAIS_HACKS/midi-player/input.mid
