@@ -4,6 +4,10 @@ import os
 
 app = Flask(__name__)
 
+const express = require('express');
+const app = express();
+const port = process.env.PORT || 3000;
+
 # Define the file path you want to check
 primer_file = "primer_notes.txt"  # Replace with your file path
 generate_midi_script = "generate_melody.sh"
