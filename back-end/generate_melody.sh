@@ -1,8 +1,7 @@
 source activate magenta
-
 sudo rm /tmp/performance_rnn/generated/*
 
-primer="$1"
+primer="$1";
 
 performance_rnn_generate \
     --run_dir=/tmp/performance_rnn/logdir/run1 \
